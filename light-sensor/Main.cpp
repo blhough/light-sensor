@@ -58,8 +58,20 @@ bool isRoomDark()
 
 void turnLightOn()
 {
+	// If the light is off turn it on.
+	if( !isLightOn )
+	{
+		isLightOn = true;
+		digitalWrite( LIT_PIN, HIGH );
+	}
 }
 
 void turnLightOff()
 {
+	// If the light is on turn it off.
+	if( isLightOn )
+	{
+		isLightOn = false;
+		digitalWrite( LIT_PIN, LOW );
+	}
 }
