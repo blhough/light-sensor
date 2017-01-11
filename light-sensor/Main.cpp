@@ -6,6 +6,8 @@ const int LIT_PIN = 17;	// Relay Enable 1	DOUT	Light	NO
 const int USB_PIN = 18; // Relay Enable 2	DOUT	USB		NC
 
 const int TIMEOUT = 60 * 1000;
+const int BRIGHTNESS_THRESHOLD = 100;
+const float BRIGHTNESS_SAMPLES = 10.0f;
 
 elapsedMillis timer;
 
@@ -15,6 +17,7 @@ void turnLightOn();
 void turnLightOff();
 
 bool isLightOn = false;
+int avgBrightness = 0;
 
 
 
@@ -53,7 +56,14 @@ bool isMotionDetected()
 
 bool isRoomDark()
 {
-	return false;
+	int brightness = analogRead( PC_PIN );
+
+	// Keep a moving average of the the room brightness.
+	avgBrightness -= avgBrightness / BRIGHTNESS_SAMPLES;
+	avgBrightness += brightness / BRIGHTNESS_SAMPLES;
+
+	// If the average brightness is below the threshold needed to be considered dark.
+	return avgBrightness < BRIGHTNESS_THRESHOLD;
 }
 
 void turnLightOn()
