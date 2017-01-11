@@ -7,6 +7,8 @@ const int USB_PIN = 18; // Relay Enable 2	DOUT	USB		NC
 
 const int TIMEOUT = 60 * 1000;
 
+elapsedMillis timer;
+
 bool isMotionDetected();
 bool isRoomDark();
 void turnLightOn();
@@ -27,6 +29,21 @@ int setup()
 
 int loop()
 {
+	if( isMotionDetected() )
+	{
+		// Reset the timer anytime motion is detected.
+		timer = 0;
+
+		turnLightOn();
+	}
+
+	if( timer >= TIMEOUT )
+	{
+		// Hold timer steady so it does not overflow.
+		timer = TIMEOUT;
+
+		turnLightOff();
+	}
 }
 
 bool isMotionDetected()
