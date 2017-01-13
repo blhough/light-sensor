@@ -8,6 +8,8 @@ const int USB_PIN = 18; // Relay Enable 2	DOUT	USB		NC
 const int TIMEOUT = 60 * 1000;
 const int BRIGHTNESS_THRESHOLD = 100;
 const float BRIGHTNESS_SAMPLES = 10.0f;
+const int DISTANCE_SAMPLES = 10;
+const int DISTANCE_SENSITIVITY = 100;
 
 elapsedMillis timer;
 
@@ -18,6 +20,8 @@ void turnLightOff();
 
 bool isLightOn = false;
 int avgBrightness = 0;
+int avgDistance1 = 0;
+int avgDistance2 = 0;
 
 
 
@@ -51,7 +55,20 @@ void loop()
 
 bool isMotionDetected()
 {
-	return false;
+	// The voltage is not perfectly linear but close enough.
+	// High voltage equates to short distance and vice versa but
+	//  it does not matter since a |delta distance| will be used.
+	int distance1 = analogRead( RF1_PIN );
+	int distance2 = analogRead( RF2_PIN );
+
+	int deltaDist1 = ( distance1 - avgDistance1 ) / DISTANCE_SAMPLES;
+	int deltaDist2 = ( distance2 - avgDistance2 ) / DISTANCE_SAMPLES;
+
+	// Keep a moving average of the distances.
+	avgDistance1 += deltaDist1;
+	avgDistance2 += deltaDist2;
+
+	return abs( deltaDist1 ) > DISTANCE_SENSITIVITY || abs( deltaDist2 ) > DISTANCE_SENSITIVITY;
 }
 
 bool isRoomDark()
