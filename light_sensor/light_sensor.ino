@@ -7,7 +7,7 @@ const int USB_PIN = 18; // Relay Enable 2	DOUT	USB		NC
 
 const int TIMEOUT = 60 * 1000;
 const int BRIGHTNESS_THRESHOLD = 100;
-const float BRIGHTNESS_SAMPLES = 10.0f;
+const int BRIGHTNESS_SAMPLES = 10;
 const int DISTANCE_SAMPLES = 10;
 const int DISTANCE_SENSITIVITY = 100;
 
