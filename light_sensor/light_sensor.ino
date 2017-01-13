@@ -21,7 +21,7 @@ int avgBrightness = 0;
 
 
 
-int setup()
+void setup()
 {
 	pinMode( LIT_PIN, OUTPUT );
 	pinMode( USB_PIN, OUTPUT );
@@ -30,7 +30,7 @@ int setup()
 	digitalWrite( USB_PIN, LOW );
 }
 
-int loop()
+void loop()
 {
 	if( isMotionDetected() )
 	{
