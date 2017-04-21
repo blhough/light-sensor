@@ -10,11 +10,12 @@
 
 #ifndef _VSARDUINO_H_
 #define _VSARDUINO_H_
+#define __HARDWARE_MK20dx256__
+#define __HARDWARE_MK20DX256__
 #define __MK20DX256__
-#define TEENSYDUINO 127
-#define ARDUINO 10605
+#define TEENSYDUINO 134
+#define ARDUINO 10801
 #define F_CPU 96000000
-#define ARDUINO_ARCH_AVR
 #define USB_SERIAL
 #define LAYOUT_US_ENGLISH
 #define __cplusplus 201103L
